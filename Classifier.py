@@ -108,3 +108,32 @@ class Classifier():
         y_pred = self.classifier.predict(self.x_train)
         return y_pred
 
+    # def ensemble(self):
+    #     # import library
+    #     from sklearn.ensemble import VotingClassifier
+    #     # create object
+    #     classifier = VotingClassifier(estimators=[('lr', self.LogistikRegression()), ('rf', self.RandomForest()), ('gnb', self.GaussianNB())], voting='hard')
+    #     # train model
+    #     classifier.fit(self.x_train, self.y_train)
+    #     self.classifier = classifier
+    #     y_pred = self.classifier.predict(self.x_train)
+    #     return y_pred
+
+    def myEnsamble(self, y_pred):
+        # voting form y_pred
+        # loop for y_pred 2 dimension
+        new_y_pred = []
+        for i in range(len(y_pred[0])):
+            new_vote = []
+            pos = 0
+            neg = 0
+            for j in range(len(y_pred)):
+                if y_pred[j][i] == 1:
+                    pos += 1
+                else:
+                    neg += 1
+            if pos > neg:
+                new_y_pred.append(1)
+            else:
+                new_y_pred.append(0)
+        return new_y_pred
