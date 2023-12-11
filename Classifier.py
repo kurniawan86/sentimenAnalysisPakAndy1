@@ -24,7 +24,7 @@ class Classifier():
         # import library
         from sklearn.svm import SVC
         # create object
-        classifier = SVC(kernel='linear')
+        classifier = SVC(kernel='linear', random_state=0, probability=True, C=1.0, gamma='auto', tol=0.1, verbose=False, max_iter=10, decision_function_shape='ovr')
         # train model
         classifier.fit(self.x_train, self.y_train)
         self.classifier = classifier

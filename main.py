@@ -1,16 +1,18 @@
+import nltk
 import pandas as pd
+from pandas import read_excel
 from sklearn.model_selection import train_test_split
 from Evaluate import Evalauate
 from Classifier import Classifier
 import numpy as np
-
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 def printErrorIndex(y_pred, y_test):
     for i in range(len(y_pred)):
         if y_pred[i] != y_test[i]:
             print(i, y_pred[i], y_test[i])
 def readData():
     # read from excel
-    df = pd.read_excel('Book1.xlsx', sheet_name='Book1')
+    df = read_excel('Book1.xlsx', sheet_name='Book1')
     # read each column
     X = df['text'].tolist()
     y = df['class'].tolist()
@@ -28,6 +30,24 @@ if __name__ == '__main__':
     X = X_train + X_test
     y = y_train + y_test
     # print("YYY ", y)
+
+    # preprocesing text data for Indonesian with sastrawi
+    # create stemmer
+    factory = StemmerFactory()
+    stemmer = factory.create_stemmer()
+
+    # stemming process with sastrawi
+    for i in range(len(X)):
+        X[i] = stemmer.stem(X[i])
+
+    # case folding process sastrawi
+    for i in range(len(X)):
+        X[i] = X[i].lower()
+
+    # stemming proses with sastrawi
+    for i in range(len(X)):
+        X[i] = stemmer.stem(X[i])
+
 
     # test BoW
     from BoW import boW
