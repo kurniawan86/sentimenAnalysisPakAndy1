@@ -18,7 +18,6 @@ def readData():
 
 if __name__ == '__main__':
     X,y = readData()
-    dataset = [X,y]
 
     # divide into train and test
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
